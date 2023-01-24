@@ -3,10 +3,14 @@ const nextConfig = {
   reactStrictMode: true,
   async rewrites() {
     return [
+      // {
+      //   source: '/api/',
+      //   destination: 'http://api:3000/',
+      // },
       {
-        source: '/api',
-        destination: 'localhost:4000/',
-      },
+        source: '/api/:path*',
+        destination: 'http://api:3000/:path*',
+      }
     ]
   },
 }
