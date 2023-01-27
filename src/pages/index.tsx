@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import styles from '@/styles/Home.module.css'
 import MainLayout from '../layouts/MainLayout'
+import { useEffect } from 'react'
 
 function renderContent() {
   return (
@@ -11,6 +12,10 @@ function renderContent() {
 
 function Home() {
 
+  useEffect(() => {
+    console.log('render')
+  }, [])
+
   const headerConfig = (
     <Head>
       <title>Pennywort & Potato</title>
@@ -19,15 +24,10 @@ function Home() {
     </Head>
   )
 
-  const data = {
-    content: renderContent(),
-    props: { test: true }
-  }
-
   return (
     <>
       {headerConfig}
-      <MainLayout {...data} />
+      <div>abc</div>
     </>
   )
 }

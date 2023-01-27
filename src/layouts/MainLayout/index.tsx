@@ -6,7 +6,6 @@ import Link from 'next/link';
 
 interface data {
   content: any;
-  props?: any;
 }
 
 const { Header, Content, Footer } = Layout;
@@ -26,8 +25,8 @@ const contentStyle = {
 
 function MainLayout(data: data) {
 
-  const { content, props } = data 
-
+  const { content } = data 
+  
   return (
     <Layout style={layoutStyle}>
       <Header>
