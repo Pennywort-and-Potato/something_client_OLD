@@ -4,6 +4,8 @@ import Image from 'next/image';
 import style from '../MainLayout/style.module.css'
 import Link from 'next/link';
 
+import useSwr from 'swr'
+
 interface data {
   content: any;
 }
