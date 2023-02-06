@@ -1,12 +1,9 @@
-.header {
-  height: 100%;
+.container {
+  min-height: 100vh;
   display: flex;
-  align-items: center;
+  flex-direction: column;
 }
 
-.icon {
-  border-radius: 8px;
-  outline: 2px solid #add8e6;
-  box-shadow: rgba(255, 255, 255, 0.4) 0px 2px 4px, rgba(255, 255, 255, 0.3) 0px 7px 13px -3px, rgba(255, 255, 255, 0.2) 0px -3px 0px inset;
-  cursor: pointer;
+.body {
+  flex-grow: 1;
 }
