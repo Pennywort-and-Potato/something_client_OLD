@@ -1,25 +1,38 @@
 import React, { useState } from 'react';
-import { Input } from 'antd'
-import { error } from 'src/Utils';
+import { Input, message } from 'antd'
+import { login } from 'src/common/APIs'
+import { NoticeType } from 'antd/es/message/interface';
 
-interface account {
+interface Iaccount {
   username: string,
   password: string
 }
 
-function onSubmit(account: account) {
-  const { username, password } = account
-  if (!username || !password) {
-    return error('Missing account or password!!')
-  }
-
-}
-
 function Header() {
-
+  const [ api, context ] = message.useMessage()
   const [ account, setAccount ] = useState({ username: '', password: '' })
 
+  const { username, password } = account
+
+  const antdMessage = (type: NoticeType, content: string) => {
+    api.open({
+      type: type,
+      content: content
+    })
+  }
+
+  const onSubmit = (account: Iaccount) => {
+    if (!username || !password) {
+      return antdMessage('error', 'Missing account or password')
+    }
+    login(account).then(res => {
+      if (res && res.error) antdMessage('error', res.detail)
+      localStorage.setItem('user_token', res.jwt)
+    })
+  }
+
   return <>
+    {context}
     <div>
       <Input 
         onChange={e => setAccount({ ...account, username: e.target.value })} 
