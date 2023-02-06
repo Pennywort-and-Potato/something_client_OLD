@@ -1,55 +1,26 @@
-import { Layout } from 'antd';
 import React from 'react'
-import Image from 'next/image';
 import style from '../MainLayout/style.module.css'
-import Link from 'next/link';
+import Footer from './Footer';
+import Header from './Header';
 
-import useSwr from 'swr'
-
-interface data {
+interface props {
   content: any;
 }
 
-const { Header, Content, Footer } = Layout;
+function MainLayout(props: props) {
 
-const layoutStyle = {
-  minHeight: '100vh'
-}
-
-const footerStyle = {
-  backgroundColor: '#001529',
-  color: 'rgb(82 200 235)',
-}
-
-const contentStyle = {
-  backgroundColor: '#fff'
-}
-
-function MainLayout(data: data) {
-
-  const { content } = data 
+  const { content } = props
   
   return (
-    <Layout style={layoutStyle}>
-      <Header>
-        <div className={style.header}>
-          <Link href='/' style={{ display: 'flex' }}>
-            <Image 
-              className={style.icon}
-              src='/icon.png' alt='' 
-              width={30} 
-              height={30}
-            />
-          </Link>
+    <>
+      <div className={style.container}>
+        <Header />
+        <div className={style.body}>
+          {content}
         </div>
-      </Header>
-      <Content style={contentStyle}>
-        {content}
-      </Content>
-      <Footer style={footerStyle}>
-        @First credit - Tue 17 Jan 2023
-      </Footer>
-    </Layout>
+        <Footer />
+      </div>
+    </>
   )
 }
 
