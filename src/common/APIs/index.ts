@@ -1,9 +1,9 @@
-interface Iaccount {
+interface IAccount {
   username: string,
   password: string
 }
 
-interface IRaccount {
+interface IRAccount {
   username: string,
   password: string,
   email: string
@@ -14,7 +14,7 @@ const headers = {
   'Content-Type': 'application/json'
 }
 
-export function login(account: Iaccount) {
+export function login(account: IAccount) {
   return fetch('api/login', {
     method: 'POST',
     headers: headers,
@@ -22,7 +22,7 @@ export function login(account: Iaccount) {
   }).then(res => res.json())
 }
 
-export function registry(account: IRaccount) {
+export function register(account: IRAccount) {
   return fetch('api/register', {
     method: 'POST',
     headers: headers,
