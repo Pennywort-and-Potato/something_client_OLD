@@ -39,3 +39,15 @@ export function getUser(token: string) {
   }).then(res => res.json())
 }
 
+
+// Imgur apis (may unuseable)
+export function uploadImgur(params: BodyInit) {
+  return fetch('https://api.imgur.com/3/upload', {
+    method: 'POST',
+    headers: {
+      Authorization: 'Client-ID ec363c80a6e75c5'
+    },
+    body: params
+  }).then(res => res.json())
+}
+
