@@ -1,7 +1,11 @@
 import styles from '@/styles/Home.module.css';
 import { useEffect, useRef } from 'react';
 import { Button, Carousel, Col, Divider, Row } from 'antd';
-
+// Dummy for exam, do not use directed from import
+import { limitedContents } from '../common/Dummy/contents'
+// Contents max of 100, get all by { allTheContents } (do not recommended)
+// Warning lag issue
+import { allThePosts } from '../common/Dummy/posts'
 
 const contentStyle: React.CSSProperties = {
   height: '160px',
@@ -12,13 +16,10 @@ const contentStyle: React.CSSProperties = {
 };
 const style: React.CSSProperties = { background: '#0092ff', padding: '8px 0' };
 
-
-
 function Home() {
 
-  useEffect(() => {
-    console.log('render')
-  }, [])
+  const [ contents, setContents ] = useState(limitedContents(20))
+  const [ posts, setPosts ] = useState(allThePosts())
 
   const ref = useRef()
 
@@ -109,7 +110,6 @@ function Home() {
         
       </Row>
     </div>
-      
     </>
   )
 }
