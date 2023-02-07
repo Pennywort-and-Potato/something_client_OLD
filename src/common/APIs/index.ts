@@ -34,7 +34,7 @@ export function getUser(token: string) {
   return fetch('api/me', {
     method: 'GET',
     headers: {
-      'Authorization': token
+      Authorization: token
     }
   }).then(res => res.json())
 }
