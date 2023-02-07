@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 interface IAccount {
   username: string,
   password: string
@@ -15,39 +17,51 @@ const headers = {
 }
 
 export function login(account: IAccount) {
-  return fetch('api/login', {
+  return axios({
+    url: 'api/login',
     method: 'POST',
     headers: headers,
-    body: JSON.stringify(account)
-  }).then(res => res.json())
+    data: JSON.stringify(account)
+  }).then(res => res).catch(err => err)
 }
 
 export function register(account: IRAccount) {
-  return fetch('api/register', {
-    method: 'POST',
+  return axios({
+    url: 'api/register',
+    method: 'post',
     headers: headers,
-    body: JSON.stringify(account)
-  }).then(res => res.json())
+    data: JSON.stringify(account)
+  }).then(res => res).catch(err => err)
 }
 
 export function getUser(token: string) {
-  return fetch('api/me', {
-    method: 'GET',
+  return axios({
+    url: 'api/me',
+    method: 'get',
     headers: {
-      Authorization: token
+      'Authorization': token
     }
-  }).then(res => res.json())
+  }).then(res => res).then(err => err)
 }
 
 
 // Imgur apis (may unuseable)
+const access_token = '5087d9eda351bb4fcf1becffa79a10bf3a490f59'
+const Authorization =  `Bearer ${access_token}`
+const imgurUrl = {
+  upload: 'https://api.imgur.com/3/upload'
+}
+
 export function uploadImgur(params: BodyInit) {
-  return fetch('https://api.imgur.com/3/upload', {
-    method: 'POST',
+  return axios({
+    method: 'post',
+    url: imgurUrl.upload,
+    data: params,
     headers: {
-      Authorization: 'Client-ID ec363c80a6e75c5'
-    },
-    body: params
-  }).then(res => res.json())
+      'Authorization': Authorization
+    }
+  })
+  .then(res => res)
+  .catch(err => err)
 }
 
