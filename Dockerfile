@@ -7,4 +7,5 @@ RUN yarn install --frozen-lockfile
 
 WORKDIR /something_client
 COPY . .
-CMD ./docker/entrypoint.sh
+RUN chmod +x ./docker/entrypoint.sh
+ENTRYPOINT exec ./docker/entrypoint.sh
