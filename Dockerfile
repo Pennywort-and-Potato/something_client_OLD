@@ -4,5 +4,4 @@ WORKDIR /something_client
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
 COPY . .
-RUN chmod +x ./docker/entrypoint.sh
-ENTRYPOINT exec ./docker/entrypoint.sh
+CMD yarn install --check-file --frozen-lockfile; yarn dev
