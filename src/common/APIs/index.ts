@@ -49,7 +49,8 @@ export function getUser(token: string) {
 const access_token = '5087d9eda351bb4fcf1becffa79a10bf3a490f59'
 const Authorization =  `Bearer ${access_token}`
 const imgurUrl = {
-  upload: 'https://api.imgur.com/3/upload'
+  upload: 'https://api.imgur.com/3/upload',
+  album:  'https://api.imgur.com/3/album/CZinZL1/images'
 }
 
 export function uploadImgur(params: BodyInit) {
@@ -58,10 +59,22 @@ export function uploadImgur(params: BodyInit) {
     url: imgurUrl.upload,
     data: params,
     headers: {
-      'Authorization': Authorization
+      Authorization
     }
   })
-  .then(res => res)
-  .catch(err => err)
+  .then(res => res.data)
+  .catch(err => err.response.data)
+}
+
+export function getImgurAlbum() {
+  return axios({
+    method: 'get',
+    url: imgurUrl.album,
+    headers: {
+      Authorization
+    }
+  })
+  .then(res => res.data)
+  .catch(err => err.response.data)
 }
 

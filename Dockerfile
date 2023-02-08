@@ -1,7 +1,8 @@
-FROM node:19-slim
+FROM node:19-slim AS deps
 RUN apt-get update
 WORKDIR /something_client
 COPY package.json yarn.lock ./
-RUN yarn install
+RUN yarn install --frozen-lockfile
 COPY . .
-CMD yarn dev || yarn install && yarn dev
+RUN chmod +x ./docker/entrypoint.sh
+ENTRYPOINT exec ./docker/entrypoint.sh
