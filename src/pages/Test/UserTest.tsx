@@ -42,7 +42,6 @@ function UserTest() {
   const loading = user == 'loading';
 
   useEffect(() => {
-    console.log('userToken', userToken)
     const token = localStorage.getItem('user_token');
     if (token && !userToken) setUserToken(token);
   }, []);

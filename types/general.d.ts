@@ -38,3 +38,33 @@ interface IPostParams {
   }[]
 }
 
+interface IContent {
+  id: number,
+  post_id: number,
+  alt: string,
+  src: string,
+  content_type: string,
+  view: number,
+  like: number,
+  dislike: number,
+  rating: number,
+  created_at: Date,
+  updated_at: Date,
+  is_deleted: boolean
+}
+
+interface IPosts {
+  view: number,
+  user_id: number,
+  id: number,
+  title: string,
+  body: string,
+  like: number,
+  dislike: number,
+  rating: number,
+  created_at: Date,
+  updated_at: Date,
+  is_deleted: boolean,
+  content: IContent[]
+}
+

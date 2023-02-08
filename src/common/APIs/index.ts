@@ -35,6 +35,13 @@ export function getUser(token: string) {
     .then((err: any) => err);
 }
 
+export function getUserPosts(id: string) {
+  return axios
+    .get(`${getHost}/api/post/user/get/${id}`)
+    .then((res: any) => res.data)
+    .then((err: any) => err);
+}
+
 export function createPost(token: string, params: IPostParams) {
   return axios
     .post(`${getHost}/api/post/create`, params, {
