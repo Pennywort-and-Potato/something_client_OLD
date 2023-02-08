@@ -8,13 +8,13 @@ const headers = {
 export function login(account: IAccount) {
   return axios.post('api/login', account, {
     headers: headers
-  }).then((res: any) => res).catch((err: any) => err)
+  }).then((res: any) => res.data).catch((err: any) => err)
 }
 
 export function register(account: IRegAccount) {
   return axios.post('api/register', account, {
     headers: headers
-  }).then((res: any) => res).catch((err: any) => err)
+  }).then((res: any) => res.data).catch((err: any) => err)
 }
 
 export function getUser(token: string) {
@@ -22,7 +22,7 @@ export function getUser(token: string) {
     headers: {
       'Authorization': token
     }
-  }).then((res: any) => res).then((err: any) => err)
+  }).then((res: any) => res.data).then((err: any) => err)
 }
 
 
