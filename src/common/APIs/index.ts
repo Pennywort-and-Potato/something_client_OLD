@@ -1,16 +1,5 @@
 import axios from 'axios';
 
-interface IAccount {
-  username: string,
-  password: string
-}
-
-interface IRAccount {
-  username: string,
-  password: string,
-  email: string
-}
-
 const headers = {
   'Accept': 'application/json',
   'Content-Type': 'application/json'
@@ -25,7 +14,7 @@ export function login(account: IAccount) {
   }).then(res => res).catch(err => err)
 }
 
-export function register(account: IRAccount) {
+export function register(account: IRegAccount) {
   return axios({
     url: 'api/register',
     method: 'post',
