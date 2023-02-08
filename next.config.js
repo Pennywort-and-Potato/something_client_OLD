@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  images: {
+    domains: ['statics.pancake.vn'],
+  },
   reactStrictMode: false,
   async rewrites() {
     return [
