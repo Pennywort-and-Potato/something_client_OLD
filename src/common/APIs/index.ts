@@ -1,47 +1,28 @@
 import axios from 'axios';
 
-interface IAccount {
-  username: string,
-  password: string
-}
-
-interface IRAccount {
-  username: string,
-  password: string,
-  email: string
-}
-
 const headers = {
   'Accept': 'application/json',
   'Content-Type': 'application/json'
 }
 
 export function login(account: IAccount) {
-  return axios({
-    url: 'api/login',
-    method: 'POST',
-    headers: headers,
-    data: JSON.stringify(account)
-  }).then(res => res).catch(err => err)
+  return axios.post('api/login', account, {
+    headers: headers
+  }).then((res: any) => res).catch((err: any) => err)
 }
 
-export function register(account: IRAccount) {
-  return axios({
-    url: 'api/register',
-    method: 'post',
-    headers: headers,
-    data: JSON.stringify(account)
-  }).then(res => res).catch(err => err)
+export function register(account: IRegAccount) {
+  return axios.post('api/register', account, {
+    headers: headers
+  }).then((res: any) => res).catch((err: any) => err)
 }
 
 export function getUser(token: string) {
-  return axios({
-    url: 'api/me',
-    method: 'get',
+  return axios.get('api/me', {
     headers: {
       'Authorization': token
     }
-  }).then(res => res).then(err => err)
+  }).then((res: any) => res).then((err: any) => err)
 }
 
 
@@ -53,28 +34,24 @@ const imgurUrl = {
   album: (id: string) => `https://api.imgur.com/3/album/${id}/images`
 }
 
-export function uploadImgur(params: BodyInit) {
-  return axios({
-    method: 'post',
-    url: imgurUrl.upload,
-    data: params,
+export function uploadImgur(params: JSON) {
+  return axios.post(imgurUrl.upload, params, {
     headers: {
+      ...headers,
       Authorization
     }
   })
-  .then(res => res.data)
-  .catch(err => err.response.data)
+  .then((res: { data: any; }) => res.data)
+  .catch((err: { response: { data: any; }; }) => err.response.data)
 }
 
 export function getImgurAlbum(id: string) {
-  return axios({
-    method: 'get',
-    url: imgurUrl.album(id),
+  return axios.get(imgurUrl.album(id), {
     headers: {
       Authorization
     }
   })
-  .then(res => res.data)
-  .catch(err => err.response.data)
+  .then((res: { data: any; }) => res.data)
+  .catch((err: { response: { data: any; }; }) => err.response.data)
 }
 
