@@ -2,12 +2,6 @@ import styles from '@/styles/Home.module.scss';
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import { Button, Carousel, Col, Divider, Row, Space, Typography } from 'antd';
 
-
-// Dummy for exam, do not use directed from import
-import { limitedContents } from '../common/Dummy/contents'
-// Contents max of 100, get all by { allTheContents } (do not recommended)
-// Warning lag issue
-import { allThePosts } from '../common/Dummy/posts'
 import { CarouselRef } from 'antd/es/carousel';
 import Image from 'next/image';
 import { AppstoreOutlined, LeftOutlined, RightOutlined, TableOutlined } from '@ant-design/icons';
@@ -40,8 +34,6 @@ const smallScreen = {
 
 function Home() {
 
-  const [ contents, setContents ] = useState(limitedContents(20))
-  const [ posts, setPosts ] = useState(allThePosts())
   const [ numberCol, setNumberCol] = useState(smallScreen);
   const { xl, lg, md, xs } = numberCol
   const ref = useRef() as MutableRefObject <CarouselRef>
