@@ -2,6 +2,8 @@ import { Form, Input, Button, ConfigProvider } from 'antd';
 import { ValidateErrorEntity } from 'rc-field-form/lib/interface';
 import { login, getUser } from '@/src/common/APIs';
 
+import { EyeTwoTone, EyeInvisibleOutlined } from '@ant-design/icons'
+
 import { useEffect, useState } from 'react';
 import { useLocalStorage } from 'usehooks-ts';
 import User from './TestComponents/User';
@@ -25,7 +27,7 @@ function RenderLoginForm(props: any) {
           <Input />
         </Item>
         <Item name={'password'} label={'Password'} rules={[{ required: true }]}>
-          <Input />
+          <Input.Password iconRender={(visible: boolean) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} />
         </Item>
         <Item>
           <Button htmlType="submit">Submit</Button>
