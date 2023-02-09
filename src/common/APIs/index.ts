@@ -32,14 +32,14 @@ export function getUser(token: string) {
       },
     })
     .then((res: any) => res.data)
-    .then((err: any) => err.response.data);
+    .catch((err: any) => err.response.data);
 }
 
 export function getUserPosts(id: string) {
   return axios
     .get(`${getHost}/api/post/user/get/${id}`)
     .then((res: any) => res.data)
-    .then((err: any) => err.response.data);
+    .catch((err: any) => err.response.data);
 }
 
 export function createPost(token: string, params: IPostParams) {
@@ -51,7 +51,7 @@ export function createPost(token: string, params: IPostParams) {
       },
     })
     .then((res: any) => res.data)
-    .then((err: any) => err.response.data);
+    .catch((err: any) => err.response.data);
 }
 
 // Imgur apis (may unuseable)
