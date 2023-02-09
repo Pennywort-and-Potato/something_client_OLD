@@ -13,9 +13,11 @@ import {
   MenuOutlined,
   SearchOutlined,
   SettingOutlined,
+  UserOutlined,
 } from "@ant-design/icons/lib/icons";
 import Image from "next/image";
 import Logo from "public/icon.png";
+import { parse } from "path";
 
 
 interface Iaccount {
@@ -108,6 +110,8 @@ function Header(props: any) {
   const [usenameRegister, setUsenameRegister] = useState();
   const [passwordRegister, setPasswordRegister] = useState();
   
+  const [checkLogin, setCheckLogin] = useState<Boolean>();
+
   function getItem(
     label: React.ReactNode,
     key?: React.Key | null,
@@ -226,26 +230,33 @@ function Header(props: any) {
       } 
 
       login(data).then((res:any) => {
-        if(res && res.success==true) {
-          console.log(res)
-          api.open({
-            message: `Check the spelling and try again`,
-            description: "",
-            type: 'success'
-          });
-        } else {
-          api.open({
-            message: `Check the spelling and try again`,
-            description: "",
-            type: 'error'
-          });
+        if (res.request.response) {
+          let response = JSON.parse(res.request.response)
+          if(response && response.success==true) {
+            api.open({
+              message: `Check the spelling and try again`,
+              description: "",
+              type: 'success',
+              duration: 2
+            });
+            modalCloseLogin()
+            setCheckLogin(true)
+          } else {
+            api.open({
+              message: `Incorrect username or password`,
+              description: "",
+              type: 'error',
+              duration: 2
+            });
+          }
         }
       })
     } else {
       api.open({
         message: `Check the Invalid and try again`,
         description: "",
-        type: 'error'
+        type: 'error',
+        duration: 2
       });
     }
   }
@@ -266,32 +277,44 @@ function Header(props: any) {
       } 
 
       register(data).then((res:any) => {
-        if(res && res.success == true) {
-          api.open({
-            message: `Successful account creation`,
-            description: "",
-            type: 'success'
-          });
-          showModalLogin()
-          modalCloseRegister()
-        } else {
-          let messageFrom =""
-          if (res.error) {
-            
-          }
+        
+        if (res.request.response) {
+          let response = JSON.parse(res.request.response)
 
-          api.open({
-            message: res.error.detail,
-            description: "",
-            type: 'error'
-          });
+          if(response && response.success == true) {
+            api.open({
+              message: `Successful account creation`,
+              description: "",
+              type: 'success',
+              duration: 2,
+            })
+            showModalLogin()
+            modalCloseRegister()
+            console.log(response.jwt,response.username)
+
+          } else {
+            
+            let messageFrom =""
+              if (response.error) {
+                if (response.error.email && response.error.username) messageFrom = "email and username already exists"
+                else if(response.error.email)  messageFrom = "email already exists"
+                else if(response.error.username)  messageFrom = "username already exists"
+              }
+            api.open({
+              message: messageFrom,
+              description: "",
+              type: 'error',
+              duration: 2
+            });
+          }
         }
       })
     } else {
       api.open({
         message: `Check the spelling and try again`,
         description: "",
-        type: 'error'
+        type: 'error',
+        duration: 2
       });
     }
   }
@@ -365,7 +388,11 @@ function Header(props: any) {
                 </Dropdown>
               </div>
               <div className="header--item u-flex-box-center ">
-                <Button className="c-button" onClick={showModalLogin} >Đăng nhập</Button>
+                {checkLogin 
+                  ? <div><UserOutlined />use</div>
+                  : <Button className="c-button" onClick={showModalLogin} >Đăng nhập</Button> 
+                }
+                
               </div>
             </Col>
           </Row>
