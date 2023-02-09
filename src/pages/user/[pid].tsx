@@ -13,7 +13,7 @@ function User(props: props) {
     <>
       {posts ? (
         <div>
-          <Space>
+          <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
             {posts.map((post: IPosts) => (
               <div>
                 <h3>{post.title}</h3>
