@@ -81,17 +81,21 @@ function User(props: any) {
 
   const onUploadDb = (queue: Promise<any>[]) => {
     return Promise.all(queue).then((res: any) => {
+
+      if (res.every((item: any) => !item)) {
+        return message.error('Upload failed');
+      }
+
       const params: IPostParams = {
         title,
         body,
         contents: res.filter((n: any) => n),
       };
+
       createPost(userToken, params).then((res) => {
         if (res.success) message.success('Upload succeeded');
         else message.error('Upload failed');
 
-        // setProgress(0)
-        // setLogger([])
       });
     });
   };
