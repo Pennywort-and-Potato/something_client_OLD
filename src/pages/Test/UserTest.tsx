@@ -1,8 +1,8 @@
-import { Form, Input, Button, ConfigProvider } from 'antd';
+import { Form, Input, Button, ConfigProvider, message } from 'antd';
 import { ValidateErrorEntity } from 'rc-field-form/lib/interface';
 import { login, getUser } from '@/src/common/APIs';
 
-import { EyeTwoTone, EyeInvisibleOutlined } from '@ant-design/icons'
+import { EyeTwoTone, EyeInvisibleOutlined } from '@ant-design/icons';
 
 import { useEffect, useState } from 'react';
 import { useLocalStorage } from 'usehooks-ts';
@@ -27,10 +27,14 @@ function RenderLoginForm(props: any) {
           <Input />
         </Item>
         <Item name={'password'} label={'Password'} rules={[{ required: true }]}>
-          <Input.Password iconRender={(visible: boolean) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} />
+          <Input.Password
+            iconRender={(visible: boolean) =>
+              visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+            }
+          />
         </Item>
         <Item>
-          <Button htmlType="submit">Submit</Button>
+          <Button htmlType='submit'>Submit</Button>
         </Item>
       </Form>
     </ConfigProvider>
@@ -56,7 +60,12 @@ function UserTest() {
 
   function onLogin(values: IAccount) {
     login(values).then((res: any) => {
-      setUserToken(res.jwt);
+      if (res.success) {
+        message.success('Login succeed');
+        setTimeout(() => setUserToken(res.jwt), 500);
+      } else {
+        message.error(res.error);
+      }
     });
   }
 

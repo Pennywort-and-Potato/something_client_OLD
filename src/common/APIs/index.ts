@@ -12,7 +12,7 @@ export function login(account: IAccount) {
       headers: headers,
     })
     .then((res: any) => res.data)
-    .catch((err: any) => err);
+    .catch((err: any) => err.response.data);
 }
 
 export function register(account: IRegAccount) {
@@ -21,7 +21,7 @@ export function register(account: IRegAccount) {
       headers: headers,
     })
     .then((res: any) => res.data)
-    .catch((err: any) => err);
+    .catch((err: any) => err.response.data);
 }
 
 export function getUser(token: string) {
@@ -32,14 +32,14 @@ export function getUser(token: string) {
       },
     })
     .then((res: any) => res.data)
-    .then((err: any) => err);
+    .then((err: any) => err.response.data);
 }
 
 export function getUserPosts(id: string) {
   return axios
     .get(`${getHost}/api/post/user/get/${id}`)
     .then((res: any) => res.data)
-    .then((err: any) => err);
+    .then((err: any) => err.response.data);
 }
 
 export function createPost(token: string, params: IPostParams) {
@@ -51,7 +51,7 @@ export function createPost(token: string, params: IPostParams) {
       },
     })
     .then((res: any) => res.data)
-    .then((err: any) => err);
+    .then((err: any) => err.response.data);
 }
 
 // Imgur apis (may unuseable)
