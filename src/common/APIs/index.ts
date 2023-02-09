@@ -1,80 +1,85 @@
 import axios from 'axios';
-
-interface IAccount {
-  username: string,
-  password: string
-}
-
-interface IRAccount {
-  username: string,
-  password: string,
-  email: string
-}
+import { getHost } from '../Utils';
 
 const headers = {
-  'Accept': 'application/json',
-  'Content-Type': 'application/json'
-}
+  Accept: 'application/json',
+  'Content-Type': 'application/json',
+};
 
 export function login(account: IAccount) {
-  return axios({
-    url: 'api/login',
-    method: 'POST',
-    headers: headers,
-    data: JSON.stringify(account)
-  }).then(res => res).catch(err => err)
+  return axios
+    .post(`${getHost}/api/login`, account, {
+      headers: headers,
+    })
+    .then((res: any) => res.data)
+    .catch((err: any) => err);
 }
 
-export function register(account: IRAccount) {
-  return axios({
-    url: 'api/register',
-    method: 'post',
-    headers: headers,
-    data: JSON.stringify(account)
-  }).then(res => res).catch(err => err)
+export function register(account: IRegAccount) {
+  return axios
+    .post(`${getHost}/api/register`, account, {
+      headers: headers,
+    })
+    .then((res: any) => res.data)
+    .catch((err: any) => err);
 }
 
 export function getUser(token: string) {
-  return axios({
-    url: 'api/me',
-    method: 'get',
-    headers: {
-      'Authorization': token
-    }
-  }).then(res => res).then(err => err)
+  return axios
+    .get(`${getHost}/api/user/me`, {
+      headers: {
+        Authorization: token,
+      },
+    })
+    .then((res: any) => res.data)
+    .then((err: any) => err);
 }
 
+export function getUserPosts(id: string) {
+  return axios
+    .get(`${getHost}/api/post/user/get/${id}`)
+    .then((res: any) => res.data)
+    .then((err: any) => err);
+}
+
+export function createPost(token: string, params: IPostParams) {
+  return axios
+    .post(`${getHost}/api/post/create`, params, {
+      headers: {
+        ...headers,
+        Authorization: token,
+      },
+    })
+    .then((res: any) => res.data)
+    .then((err: any) => err);
+}
 
 // Imgur apis (may unuseable)
-const access_token = '5087d9eda351bb4fcf1becffa79a10bf3a490f59'
-const Authorization =  `Bearer ${access_token}`
+const access_token = '5087d9eda351bb4fcf1becffa79a10bf3a490f59';
+const Authorization = `Bearer ${access_token}`;
 const imgurUrl = {
   upload: 'https://api.imgur.com/3/upload',
-  album: (id: string) => `https://api.imgur.com/3/album/${id}/images`
-}
+  album: (id: string) => `https://api.imgur.com/3/album/${id}/images`,
+};
 
-export function uploadImgur(params: BodyInit) {
-  return axios({
-    method: 'post',
-    url: imgurUrl.upload,
-    data: params,
-    headers: {
-      Authorization
-    }
-  })
-  .then(res => res.data)
-  .catch(err => err.response.data)
+export function uploadImgur(params: FormData) {
+  return axios
+    .post(imgurUrl.upload, params, {
+      headers: {
+        Authorization,
+      },
+    })
+    .then((res: { data: any }) => res.data)
+    .catch((err: { response: { data: any } }) => err.response.data);
 }
 
 export function getImgurAlbum(id: string) {
-  return axios({
-    method: 'get',
-    url: imgurUrl.album(id),
-    headers: {
-      Authorization
-    }
-  })
-  .then(res => res.data)
-  .catch(err => err.response.data)
+  return axios
+    .get(imgurUrl.album(id), {
+      headers: {
+        Authorization,
+      },
+    })
+    .then((res: { data: any }) => res.data)
+    .catch((err: { response: { data: any } }) => err.response.data);
 }
-
