@@ -1,8 +1,6 @@
-
-
 import React, { useEffect, useRef, useState } from "react";
 import { Button, Checkbox, Col, Drawer, Dropdown, Form, Input, InputRef, Menu, message, Modal, notification, Row, Space, Switch } from "antd";
-import { login,register } from "src/common/APIs";
+import { getUser, login,register } from "src/common/APIs";
 import { NoticeType } from "antd/es/message/interface";
 import { MenuProps } from "rc-menu";
 import { DashOutlined } from "@ant-design/icons";
@@ -18,6 +16,7 @@ import {
 import Image from "next/image";
 import Logo from "public/icon.png";
 import { parse } from "path";
+import { stringify } from "querystring";
 
 
 interface Iaccount {
@@ -40,7 +39,7 @@ function stringToBool<Boolean>(str: string) {
 
 
 function FormAccInput(props :any) {
-  const {media, textName ,placeholder} = props
+  const {media, textName ,placeholder,type} = props
   const setInput = (e:any) => {
     props.valInput(e.target.value)
   }
@@ -51,15 +50,13 @@ function FormAccInput(props :any) {
         {textName}
       </Col>
       <Col span={24} md={16} className="form--padding">
-        <Input placeholder={placeholder}  onChange={(el) => setInput(el)} className="form__input"/>
+        <Input placeholder={placeholder} type={type} onChange={(el) => setInput(el)} className="form__input"/>
       </Col>
     </Row>
   )
 }
 
 function FormAccSubmit(props :any) {
-
-
 
   const {media, click, nextForm, textCheckbox, textNote, nameButton} = props
   return (
@@ -81,7 +78,7 @@ function FormAccSubmit(props :any) {
       <Col span={24} className="u-flex-box-center form--padding">
         
         <Button onClick={click} className="u-text-center c-button">{nameButton}</Button>
-      
+        
       </Col>
     </Row>
   )
@@ -106,11 +103,21 @@ function Header(props: any) {
   const [passwordLogin, setPasswordLogin] = useState();
 
 
+
+
   const [emailRegister, setEmailRegister] = useState();
   const [usenameRegister, setUsenameRegister] = useState();
   const [passwordRegister, setPasswordRegister] = useState();
+  const [firstNameRegister, setFirstNameRegister] = useState();
+  const [lastNameRegister, setLastNameRegister] = useState();
+  const [birthDayRegister, setBirthDayRegister] = useState();
+
   
-  const [checkLogin, setCheckLogin] = useState<Boolean>();
+  const [checkLogin, setCheckLogin] = useState<boolean>();
+  const [nameLogin, setNameLogin] = useState<string>("");
+
+
+
 
   function getItem(
     label: React.ReactNode,
@@ -143,6 +150,16 @@ function Header(props: any) {
     if (getLocalTheme) {
       setTheme(stringToBool(getLocalTheme))
       props.changeTheme(stringToBool(getLocalTheme))
+    }
+    // get token
+    const tokenLocal = localStorage.getItem("user_token");
+    if (tokenLocal) {
+      console.log(tokenLocal)
+      //getUser(tokenLocal).then((res) => console.log(res));
+      // getUser(token).then((res) => {
+      //   //setCheckLogin(true)
+      //   console.log(res)
+      // });
     }
   }, []);
 
@@ -217,8 +234,11 @@ function Header(props: any) {
     ]),
   ];
 
-  
+  // const [firstNameRegister, setFirstNameRegister] = useState();
+  // const [lastNameRegister, setLastNameRegister] = useState();
+  // const [birthDayRegister, setBirthDayRegister] = useState();
   // login
+  
   const loginAcc = () => {
     if(usenameLogin && passwordLogin) {
       const data:{
@@ -230,9 +250,19 @@ function Header(props: any) {
       } 
 
       login(data).then((res:any) => {
-        if (res.request.response) {
-          let response = JSON.parse(res.request.response)
-          if(response && response.success==true) {
+          if(res && res.success==true) {
+
+            const fullName = res.user.first_name + " " + res.user.last_name
+            const token = res.jwt
+            let toDay:any = new Date() 
+            toDay = toDay.getTime()
+
+            let dataLocalUser = {
+              token : "dsa"
+
+            }
+
+
             api.open({
               message: `Check the spelling and try again`,
               description: "",
@@ -241,7 +271,13 @@ function Header(props: any) {
             });
             modalCloseLogin()
             setCheckLogin(true)
+            setNameLogin(fullName)
+            localStorage.setItem('user', "");
+
           } else {
+            var toDay = new Date();
+            console.log(toDay)
+            //let response = JSON.parse(res.request.response)
             api.open({
               message: `Incorrect username or password`,
               description: "",
@@ -249,7 +285,6 @@ function Header(props: any) {
               duration: 2
             });
           }
-        }
       })
     } else {
       api.open({
@@ -264,36 +299,41 @@ function Header(props: any) {
   const registerAcc = () => {
     console.log(emailRegister, usenameRegister, passwordRegister)
 
-    if(emailRegister && usenameRegister && passwordRegister) {
-      
+    if(emailRegister && usenameRegister && passwordRegister && firstNameRegister && lastNameRegister && birthDayRegister) {
+      let  adb = new Date("December 17, 1995 03:24:00")
+      console.log(birthDayRegister,emailRegister)
       const data:{
-        email:string,
-        username:string,
-        password:string
+        username: string;
+        first_name: string;
+        last_name: string;
+        date_of_birth: Date;
+        email: string;
+        password: string;
       } = {
-        email:emailRegister,
+
         username: usenameRegister,
-        password: passwordRegister
+        first_name: firstNameRegister,
+        last_name: lastNameRegister,
+        date_of_birth: birthDayRegister,
+        email:emailRegister,
+        password: passwordRegister,
       } 
 
       register(data).then((res:any) => {
-        
-        if (res.request.response) {
-          let response = JSON.parse(res.request.response)
-
-          if(response && response.success == true) {
-            api.open({
-              message: `Successful account creation`,
-              description: "",
-              type: 'success',
-              duration: 2,
-            })
-            showModalLogin()
-            modalCloseRegister()
-            console.log(response.jwt,response.username)
-
-          } else {
-            
+        console.log(res)
+        if (res.success && res) {
+          api.open({
+            message: `Successful account creation`,
+            description: "",
+            type: 'success',
+            duration: 2,
+          })
+          showModalLogin()
+          modalCloseRegister()
+          
+        } else
+          if(res.request) {
+            let response = JSON.parse(res.request.response)
             let messageFrom =""
               if (response.error) {
                 if (response.error.email && response.error.username) messageFrom = "email and username already exists"
@@ -306,8 +346,17 @@ function Header(props: any) {
               type: 'error',
               duration: 2
             });
+            
+          } else {
+            api.open({
+              message: "error",
+              description: "",
+              type: 'error',
+              duration: 2
+            });
+            
           }
-        }
+        
       })
     } else {
       api.open({
@@ -387,12 +436,11 @@ function Header(props: any) {
                   </div>
                 </Dropdown>
               </div>
-              <div className="header--item u-flex-box-center ">
+              <div className="header--item u-flex-box-center header__acc">
                 {checkLogin 
-                  ? <div><UserOutlined />use</div>
+                  ? <a className="header__acc--name"><UserOutlined style={{padding: "10px"}}/>{nameLogin}</a>
                   : <Button className="c-button" onClick={showModalLogin} >Đăng nhập</Button> 
                 }
-                
               </div>
             </Col>
           </Row>
@@ -429,16 +477,18 @@ function Header(props: any) {
           media={media}
           textName="Username"
           placeholder="Username"
+          type="text"
           valInput={(el:any)=>setUsenameLogin(el)}
         />
         <FormAccInput 
           media={media}
           textName="Password"
           placeholder="Password"
+          type="text"
           valInput={(el:any)=>setPasswordLogin(el)}
         />
+         
         <FormAccSubmit
-
           media={media}
           nameButton="Login"
           textCheckbox= "Keep me logged in"
@@ -463,19 +513,44 @@ function Header(props: any) {
           media={media}
           textName="email"
           placeholder="email"
+          type="text"
           valInput={(el:any)=>setEmailRegister(el)}
         />
         <FormAccInput 
           media={media}
           textName="Username"
           placeholder="Username"
+          type="text"
           valInput={(el:any)=>setUsenameRegister(el)}
         />
         <FormAccInput 
           media={media}
           textName="Password"
           placeholder="Password"
+          type="text"
           valInput={(el:any)=>setPasswordRegister(el)}
+        />
+     
+        <FormAccInput 
+          media={media}
+          textName="First Name"
+          placeholder="First Name"
+          type="text"
+          valInput={(el:any)=>setFirstNameRegister(el)}
+        />
+        <FormAccInput 
+          media={media}
+          textName="Last Name"
+          placeholder="Last Name"
+          type="text"
+          valInput={(el:any)=>setLastNameRegister(el)}
+        />
+        <FormAccInput 
+          media={media}
+          textName="Birth Day"
+          placeholder="Birth Day"
+          type="date"
+          valInput={(el:any)=>setBirthDayRegister(el)}
         />
         <FormAccSubmit
           media={media}

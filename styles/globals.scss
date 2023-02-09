@@ -25,6 +25,10 @@ body {
   --text--color--active: #fbfbfb;
 }
 
+a,a:hover {
+  color: var(--text--color);
+}
+
 .l-container {
   width: 100%;
   max-width: 1200px;
@@ -128,6 +132,12 @@ body {
 
   &__tool {
     font-size: 20px;
+  }
+
+  &__acc {
+    &--name,&--name:hover {
+      color: var(--color--outstan);
+    }
   }
 
   &__modal {

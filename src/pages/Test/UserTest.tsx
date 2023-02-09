@@ -47,6 +47,7 @@ function UserTest() {
   }, []);
 
   useEffect(() => {
+    
     if (userToken && !isEmpty(userToken))
       getUser(userToken).then((res) => setUser(res.data));
     else setUser(null);
