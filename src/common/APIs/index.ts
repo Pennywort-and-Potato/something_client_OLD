@@ -26,7 +26,7 @@ export function register(account: IRegAccount) {
 
 export function getUser(token: string) {
   return axios
-    .get(`${getHost}/api/user/me`, {
+    .get(`${getHost}/api/me`, {
       headers: {
         Authorization: token,
       },
@@ -37,14 +37,14 @@ export function getUser(token: string) {
 
 export function getUserPosts(id: string) {
   return axios
-    .get(`${getHost}/api/post/user/get/${id}`)
+    .get(`${getHost}/api/v1/post/user/get/${id}`)
     .then((res: any) => res.data)
     .catch((err: any) => err.response.data);
 }
 
 export function createPost(token: string, params: IPostParams) {
   return axios
-    .post(`${getHost}/api/post/create`, params, {
+    .post(`${getHost}/api/v1/post/create`, params, {
       headers: {
         ...headers,
         Authorization: token,
