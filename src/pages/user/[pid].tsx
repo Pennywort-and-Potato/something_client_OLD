@@ -15,13 +15,14 @@ function User(props: props) {
         <div>
           <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
             {posts.map((post: IPosts) => (
-              <div>
+              <div key={post.id}>
                 <h3>{post.title}</h3>
                 <Space>
                   {post.content.map((content: IContent) => 
                     <Image src={content.src} alt={content.alt} 
                       width={150}
-                      height={50} 
+                      height={50}
+                      key={content.id}
                     />
                   )}
                 </Space>
