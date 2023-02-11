@@ -37,14 +37,14 @@ export function getUser(token: string) {
 
 export function getUserPosts(id: string) {
   return axios
-    .get(`${getHost}/api/v1/post/user/get/${id}`)
+    .get(`${getHost}/api/v2/getPostByUserID/${id}`)
     .then((res: any) => res.data)
     .catch((err: any) => err.response.data);
 }
 
 export function createPost(token: string, params: IPostParams) {
   return axios
-    .post(`${getHost}/api/v1/post/create`, params, {
+    .post(`${getHost}/api/v2/createPost`, params, {
       headers: {
         ...headers,
         Authorization: token,
