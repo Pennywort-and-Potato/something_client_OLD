@@ -1,8 +1,8 @@
-import axios from 'axios';
-import { getHost } from '../Utils';
+import axios, { AxiosResponse } from 'axios';
+import { getHost } from './utils';
 
 const headers = {
-  Accept: 'application/json',
+  'Accept': 'application/json',
   'Content-Type': 'application/json',
 };
 
@@ -11,7 +11,7 @@ export function login(account: IAccount) {
     .post(`${getHost}/api/login`, account, {
       headers: headers,
     })
-    .then((res: any) => res.data)
+    .then((res: AxiosResponse) => res.data)
     .catch((err: any) => err.response.data);
 }
 
@@ -20,7 +20,7 @@ export function register(account: IRegAccount) {
     .post(`${getHost}/api/register`, account, {
       headers: headers,
     })
-    .then((res: any) => res.data)
+    .then((res: AxiosResponse) => res.data)
     .catch((err: any) => err.response.data);
 }
 
@@ -31,14 +31,14 @@ export function getUser(token: string) {
         Authorization: token,
       },
     })
-    .then((res: any) => res.data)
+    .then((res: AxiosResponse) => res.data)
     .catch((err: any) => err.response.data);
 }
 
 export function getUserPosts(id: string) {
   return axios
     .get(`${getHost}/api/v2/getPostByUserID/${id}`)
-    .then((res: any) => res.data)
+    .then((res: AxiosResponse) => res.data)
     .catch((err: any) => err.response.data);
 }
 
@@ -50,7 +50,7 @@ export function createPost(token: string, params: IPostParams) {
         Authorization: token,
       },
     })
-    .then((res: any) => res.data)
+    .then((res: AxiosResponse) => res.data)
     .catch((err: any) => err.response.data);
 }
 
