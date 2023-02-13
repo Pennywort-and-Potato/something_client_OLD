@@ -22,3 +22,4 @@ const home = (props: Props) => {
 };
 
 export default home;
+
