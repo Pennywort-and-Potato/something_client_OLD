@@ -1,23 +1,23 @@
-import Header from "./layout_components/Header";
-import Footer from "./layout_components/Footer";
+import Footer from '@/components/Footer';
+import Header from '@/components/Header';
+import './globals.scss';
 
-type props = {
-  children: React.ReactNode
-}
-
-function RootLayout(props: props) {
-  const { children } = props
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html>
       <head>
-        <body>
-          <Header />
-          {children}
-          <Footer />
-        </body>
+        <title>Something Client</title>
+        <link rel='icon' href='/icon.png' />
       </head>
+      <body>
+        <Header />
+        {children}
+        <Footer />
+      </body>
     </html>
-  )
+  );
 }
-
-export default RootLayout

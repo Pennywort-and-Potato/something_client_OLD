@@ -1,12 +1,10 @@
 import React from 'react'
 
-type Props = {
-  
-}
+type Props = {}
 
 const Footer = (props: Props) => {
   return (
-    <div>Footer</div>
+    <div>footer</div>
   )
 }
 

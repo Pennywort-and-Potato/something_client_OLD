@@ -1,11 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: false,
-  images: {
-    domains: ['i.imgur.com', 'i.dummyjson.com'],
-  },
   experimental: {
-    appDir: true
+    appDir: true,
+  },
+  images: {
+    domains: ['i.imgur.com'],
   },
   async rewrites() {
     return [
