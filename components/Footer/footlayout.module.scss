@@ -1,0 +1,46 @@
+@import '@fontsource/roboto/300.css';
+@import '@fontsource/roboto/400.css';
+@import '@fontsource/roboto/500.css';
+@import '@fontsource/roboto/700.css';
+.footer-main {
+    position: relative;
+    width: 100%;
+    padding: 20px 0;
+    background-color: #efefef;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+}
+.box-img {
+    position: relative;
+    width: 60px;
+    aspect-ratio: 1/1;
+    margin: 0 auto;
+}
+.title-h2 {
+    font-size: 30px;
+    font-weight: 400;
+    text-transform: capitalize;
+    color: inherit;
+    text-align: center;
+    margin-top: 0;
+}
+.box-ul {
+    width: 100%;
+    position: relative;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.item-li {
+    padding: 10px;
+    position: relative;
+}
+.a {
+    color: inherit;
+    text-decoration: none;
+}
+.box-iframe {
+    width: 100%;
+    height: 200px;
+    background-color: orange;
+}

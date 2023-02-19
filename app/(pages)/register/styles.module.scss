@@ -1,0 +1,27 @@
+@import '@fontsource/roboto/300.css';
+@import '@fontsource/roboto/400.css';
+@import '@fontsource/roboto/500.css';
+@import '@fontsource/roboto/700.css';
+.bottom-form {
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 10px 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+.btn-form {
+    position: relative;
+    width: 200px;
+    margin: 5px auto;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+}
+
+.title-h2 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+}

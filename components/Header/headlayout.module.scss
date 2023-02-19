@@ -1,0 +1,29 @@
+
+@import '@fontsource/roboto/300.css';
+@import '@fontsource/roboto/400.css';
+@import '@fontsource/roboto/500.css';
+@import '@fontsource/roboto/700.css';
+.box-img {
+    position: relative;
+    width: 60px;
+    aspect-ratio: 1/1;
+}
+.color-red {
+    color: #ff0000;
+}
+.color-black {
+    color: #000;
+}
+.color-white {
+    color: #fff;
+}
+
+.btn-nav {
+    position: absolute;
+    bottom: 5%;
+    right: 15px;
+    padding: 5px;
+    border: 1px solid #333;
+    border-radius: 50%;
+    z-index: 1;
+}
